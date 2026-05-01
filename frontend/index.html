@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Driven Phishing Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>AI-Driven Phishing Detection System</h1>
+        <p class="subtitle">
+            Enter the sender email, subject, and message to check if the email is phishing or legit.
+        </p>
+
+        <form method="POST" class="form-card">
+            <label for="sender">Email Address</label>
+            <input
+                type="email"
+                id="sender"
+                name="sender"
+                placeholder="example@domain.com"
+                value="{{ sender }}"
+                required
+            >
+
+            <label for="subject">Subject</label>
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Enter email subject"
+                value="{{ subject }}"
+                required
+            >
+
+            <label for="body">Message</label>
+            <textarea
+                id="body"
+                name="body"
+                rows="10"
+                placeholder="Enter the email message here"
+                required
+            >{{ body }}</textarea>
+
+            <button type="submit">Detect Email</button>
+        </form>
+
+        {% if result %}
+        <div class="result-card">
+            <h2>Prediction Result</h2>
+            <p class="result-text">{{ result }}</p>
+            {% if confidence is not none %}
+            <p class="confidence-text">Confidence: {{ '%.2f'|format(confidence * 100) }}%</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
